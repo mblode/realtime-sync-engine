@@ -2,7 +2,6 @@ import { useRoom } from "@/lib/use-room";
 import { CounterForm } from "./counter-form";
 import { TodosForm } from "./todos-form";
 import { observer } from "mobx-react-lite";
-import { Linear } from "./linear";
 
 export const App = observer(() => {
   useRoom({ roomSlug: "e" });
@@ -12,7 +11,6 @@ export const App = observer(() => {
       <h1>Realtime Sync Engine</h1>
       <CounterForm />
       <TodosForm />
-      <Linear />
     </div>
   );
 });
