@@ -1,43 +1,43 @@
-type TransactionLocation = 'client' | 'server';
-type TransactionReason = 'initial' | 'rebase' | 'authoritative';
+type TransactionLocation = "client" | "server";
+type TransactionReason = "initial" | "rebase" | "authoritative";
 
-export type TransactionKey = 'counter' | 'todos';
+export type TransactionKey = "counter" | "todos";
 
 export type TransactionPayload =
 	| {
-			type: 'INCREMENT_COUNTER';
+			type: "INCREMENT_COUNTER";
 			delta: number;
 	  }
 	| {
-			type: 'DECREMENT_COUNTER';
+			type: "DECREMENT_COUNTER";
 			delta: number;
 	  }
 	| {
-			type: 'SET_COUNTER';
+			type: "SET_COUNTER";
 			value: number;
 	  }
 	| {
-			type: 'GET_COUNTER';
+			type: "GET_COUNTER";
 			value: number;
 	  }
 	| {
-			type: 'SET_TODOS';
+			type: "SET_TODOS";
 			value: Todo[];
 	  }
 	| {
-			type: 'SET_TODO';
+			type: "SET_TODO";
 			value: Todo;
 	  }
 	| {
-			type: 'UPDATE_TODO';
-			value: Partial<Todo> & Required<Pick<Todo, 'id'>>;
+			type: "UPDATE_TODO";
+			value: Partial<Todo> & Required<Pick<Todo, "id">>;
 	  }
 	| {
-			type: 'DELETE_TODO';
-			id: Pick<Todo, 'id'>;
+			type: "DELETE_TODO";
+			id: Pick<Todo, "id">;
 	  }
 	| {
-			type: 'LIST_TODOS';
+			type: "LIST_TODOS";
 			value: Todo[];
 	  };
 

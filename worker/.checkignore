@@ -1,0 +1,10 @@
+# Used to ignore prettier checks
+
+.yarn
+node_modules
+package.json
+renovate.json
+
+helmfile*.yaml
+dist
+.wrangler

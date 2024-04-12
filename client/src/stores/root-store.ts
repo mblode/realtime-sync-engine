@@ -4,11 +4,11 @@ import { createContext } from "react";
 import { PublicStore } from "./public-store";
 
 export class RootStore {
-  publicStore: PublicStore;
+	publicStore: PublicStore;
 
-  constructor() {
-    this.publicStore = new PublicStore(this);
-  }
+	constructor() {
+		this.publicStore = new PublicStore(this);
+	}
 }
 
 export const rootStore = new RootStore();
