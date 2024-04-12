@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useContext } from "react";
 import { RootStoreContext } from "@/stores/root-store";
-import { Transaction } from "./types";
+import { Transaction } from "../../../shared/types";
 import { BATCH_INTERVAL_IN_MS } from "./constants";
 
 type Props = {

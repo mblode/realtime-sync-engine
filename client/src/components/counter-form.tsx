@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { RootStoreContext } from "@/stores/root-store";
 import { observer } from "mobx-react-lite";
-import { TransactionPayload } from "@/lib/types";
+import { TransactionPayload } from "../../../shared/types";
 
 export const CounterForm = observer(() => {
   const {

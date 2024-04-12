@@ -2,7 +2,7 @@ import { useCallback, ChangeEvent, useContext } from "react";
 import { Input } from "./ui/input";
 import { RootStoreContext } from "@/stores/root-store";
 import { observer } from "mobx-react-lite";
-import { Todo } from "@/lib/types";
+import { Todo } from "../../../shared/types";
 import { Checkbox } from "./ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
 

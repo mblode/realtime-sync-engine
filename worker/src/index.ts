@@ -1,5 +1,5 @@
 import { DurableObject } from 'cloudflare:workers';
-import { Todo, Transaction } from './types';
+import { Todo, Transaction } from '../../shared/types';
 import { v4 } from 'uuid';
 import { debounce } from 'lodash';
 import { BUFFER_TIME_IN_MS } from './constants';

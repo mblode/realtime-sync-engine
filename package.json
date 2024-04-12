@@ -1,0 +1,22 @@
+{
+  "name": "realtime-sync-engine",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "worker"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "deploy": "npm run deploy --workspaces",
+    "dev": "concurrently \"npm run dev --workspace=client\" \"npm run dev --workspace=worker\"",
+    "check:formatting": "npx @biomejs/biome format .",
+    "fix:formatting": "npx @biomejs/biome format --write .",
+    "fix:linting": "biome check --apply .",
+    "test": "npm run test --workspaces"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.6.4",
+    "concurrently": "^8.2.2"
+  }
+}
