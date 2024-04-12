@@ -1,0 +1,26 @@
+name: Worker Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "worker/**"
+      - "shared/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+        working-directory: ./worker
+      - run: npm run build
+        working-directory: ./worker
+      - uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: "./worker"

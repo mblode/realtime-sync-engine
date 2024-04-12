@@ -1,0 +1,28 @@
+name: Client Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "client/**"
+      - "shared/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+        working-directory: ./client
+      - run: npm run build
+        working-directory: ./client
+      - uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: my-project
+          directory: ./client/dist
