@@ -1,6 +1,7 @@
 export interface Storage {
 	get<T>(key: string): Promise<T | undefined>;
 	set<T>(key: string, value: T): Promise<void>;
+	has<T>(key: string): Promise<boolean>;
 }
 
 export class WriteTransaction {
@@ -16,5 +17,9 @@ export class WriteTransaction {
 
 	async set<T>(key: string, value: T): Promise<void> {
 		await this.storage.set<T>(key, value);
+	}
+
+	async has<T>(key: string): Promise<boolean> {
+		return !!(await this.storage.get<T>(key));
 	}
 }

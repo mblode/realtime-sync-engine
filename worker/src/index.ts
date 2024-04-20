@@ -111,54 +111,146 @@ export class RealtimeSyncEngine extends DurableObject {
 			const transaction = this.transactionQueue.shift()
 			if (!transaction) continue
 
-			switch (transaction.payload.type) {
-				case 'INCREMENT_COUNTER':
-					await mutators.incrementCounter(
-						this.tx,
-						transaction.key,
-						transaction.payload.delta,
-					)
-					break
+			if (transaction.key === 'counter') {
+				switch (transaction.payload.type) {
+					case 'INCREMENT_COUNTER':
+						await mutators.incrementCounter(
+							this.tx,
+							transaction.key,
+							transaction.payload.delta,
+						)
+						break
 
-				case 'DECREMENT_COUNTER':
-					await mutators.decrementCounter(
-						this.tx,
-						transaction.key,
-						transaction.payload.delta,
-					)
-					break
+					case 'DECREMENT_COUNTER':
+						await mutators.decrementCounter(
+							this.tx,
+							transaction.key,
+							transaction.payload.delta,
+						)
+						break
 
-				case 'SET_COUNTER':
-					await mutators.setCounter(
-						this.tx,
-						transaction.key,
-						transaction.payload.value,
-					)
-					break
+					case 'SET_COUNTER':
+						await mutators.setCounter(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
+				}
+			} else if (transaction.key === 'todos') {
+				switch (transaction.payload.type) {
+					case 'UPDATE_TODO':
+						await mutators.updateTodo(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
 
-				case 'UPDATE_TODO':
-					await mutators.updateTodo(
-						this.tx,
-						transaction.key,
-						transaction.payload.value,
-					)
-					break
+					case 'SET_TODO':
+						await mutators.setTodo(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
 
-				case 'SET_TODO':
-					await mutators.setTodo(
-						this.tx,
-						transaction.key,
-						transaction.payload.value,
-					)
-					break
+					case 'DELETE_TODO':
+						await mutators.deleteTodo(
+							this.tx,
+							transaction.key,
+							transaction.payload.id,
+						)
+						break
+				}
+			} else if (transaction.key === 'blocks') {
+				switch (transaction.payload.type) {
+					case 'UPDATE_BLOCK':
+						await mutators.updateBlock(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
 
-				case 'DELETE_TODO':
-					await mutators.deleteTodo(
-						this.tx,
-						transaction.key,
-						transaction.payload.id,
-					)
-					break
+					case 'SET_BLOCK':
+						await mutators.setBlock(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
+
+					case 'DELETE_BLOCK':
+						await mutators.deleteBlock(
+							this.tx,
+							transaction.key,
+							transaction.payload.id,
+						)
+						break
+				}
+			} else if (transaction.key === 'clients') {
+				switch (transaction.payload.type) {
+					case 'UPDATE_CLIENT':
+						await mutators.updateClient(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
+
+					case 'SET_CLIENT':
+						await mutators.setClient(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
+
+					case 'DELETE_CLIENT':
+						await mutators.deleteClient(
+							this.tx,
+							transaction.key,
+							transaction.payload.id,
+						)
+						break
+				}
+			} else if (transaction.key === 'page') {
+				switch (transaction.payload.type) {
+					case 'GET_PAGE':
+						await mutators.getPage(this.tx, transaction.key)
+						break
+
+					case 'INIT_PAGE':
+						await mutators.initPage(this.tx, transaction.key)
+						break
+
+					case 'UPDATE_PAGE':
+						await mutators.updatePage(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
+				}
+			} else if (transaction.key === 'theme') {
+				switch (transaction.payload.type) {
+					case 'GET_THEME':
+						await mutators.getTheme(this.tx, transaction.key)
+						break
+
+					case 'INIT_THEME':
+						await mutators.initTheme(this.tx, transaction.key)
+						break
+
+					case 'UPDATE_THEME':
+						await mutators.updateTheme(
+							this.tx,
+							transaction.key,
+							transaction.payload.value,
+						)
+						break
+				}
 			}
 
 			let mutationId = this.mutationId

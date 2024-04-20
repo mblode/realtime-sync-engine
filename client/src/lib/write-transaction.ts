@@ -15,4 +15,8 @@ export class MobxStorage implements Storage {
 	async set<T>(key: string, value: T): Promise<void> {
 		this.store[key] = value;
 	}
+
+	async has(key: string): Promise<boolean> {
+		return !!this.store[key];
+	}
 }

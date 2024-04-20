@@ -9,7 +9,7 @@ import {
 } from "react";
 import { v4 } from 'uuid';
 import { TodoItem } from "./todo-item";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 
 export const TodosForm = observer(() => {
 	const {

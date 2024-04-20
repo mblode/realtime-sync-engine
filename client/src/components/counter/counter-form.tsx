@@ -1,9 +1,9 @@
 import { RootStoreContext } from "@/stores/root-store";
 import { observer } from "mobx-react-lite";
 import { type ChangeEvent, useCallback, useContext } from "react";
-import type { TransactionPayload } from "../../../shared/types";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import type { TransactionPayload } from "../../../../shared/types";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export const CounterForm = observer(() => {
 	const {

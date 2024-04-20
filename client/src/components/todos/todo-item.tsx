@@ -2,9 +2,9 @@ import { RootStoreContext } from "@/stores/root-store";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import { observer } from "mobx-react-lite";
 import { type ChangeEvent, useCallback, useContext } from "react";
-import type { Todo } from "../../../shared/types";
-import { Checkbox } from "./ui/checkbox";
-import { Input } from "./ui/input";
+import type { Todo } from "../../../../shared/types";
+import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
 
 type Props = {
 	item: Todo;

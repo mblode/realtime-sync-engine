@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 
-// import { makePersistable } from "mobx-persist-store";
-// import DBController from "mobx-persist-store-idb-adapter";
+import { makePersistable } from "mobx-persist-store";
+import DBController from "mobx-persist-store-idb-adapter";
 import { v4 } from "uuid";
 import type {
 	State,
@@ -19,32 +19,40 @@ export class PublicStore {
 	clientState: State = {
 		counter: 0,
 		todos: [],
+		blocks: [],
+		clients: [],
+		theme: null,
+		themeInit: false,
+		page: null,
+		pageInit: false,
 	};
-	serverState: State = {
-		counter: 0,
-		todos: [],
-	};
+	serverState: Partial<State> = {};
 	webSocket: WebSocket | null = null;
 	clientId = v4();
 	mutationId = 0;
 	clientTransactions: Transaction[] = [];
 	unsentClientTransactions: Transaction[] = [];
+	activeBlockId: string | null = null;
 
 	constructor(rootStore: RootStore) {
-		// const indexedDBStore = new DBController("realtimeSyncEngine", "public", 1);
+		const indexedDBStore = new DBController("realtimeSyncEngine", "public", 1);
 
 		makeAutoObservable(this, undefined, { autoBind: true });
-		// makePersistable(this, {
-		// 	name: "RealtimeSyncEnginePublicStorage",
-		// 	properties: ["clientState"],
-		// 	storage: indexedDBStore,
-		// 	stringify: false,
-		// });
+		makePersistable(this, {
+			name: "RealtimeSyncEnginePublicStorage",
+			properties: ["clientState"],
+			storage: indexedDBStore,
+			stringify: false,
+		});
 		this.rootStore = rootStore;
 	}
 
 	setWebSocket(webSocket: WebSocket | null) {
 		this.webSocket = webSocket;
+	}
+
+	setActiveBlockId(activeBlockId: string | null) {
+		this.activeBlockId = activeBlockId;
 	}
 
 	async processTransactions(transactions: Transaction[]) {
@@ -72,7 +80,7 @@ export class PublicStore {
 			}
 		}
 
-		this.clientState = this.serverState;
+		this.clientState = this.serverState as State;
 
 		const clientTx = new WriteTransaction(new MobxStorage(this.clientState));
 
@@ -161,6 +169,78 @@ export class PublicStore {
 
 				case "DELETE_TODO":
 					await mutators.deleteTodo(tx, key, payload.id);
+					break;
+			}
+		} else if (key === "blocks") {
+			switch (payload.type) {
+				case "LIST_BLOCKS":
+					await mutators.setBlocks(tx, key, payload.value);
+					break;
+
+				case "SET_BLOCKS":
+					await mutators.setBlocks(tx, key, payload.value);
+					break;
+
+				case "UPDATE_BLOCK":
+					await mutators.updateBlock(tx, key, payload.value);
+					break;
+
+				case "SET_BLOCK":
+					await mutators.setBlock(tx, key, payload.value);
+					break;
+
+				case "DELETE_BLOCK":
+					await mutators.deleteBlock(tx, key, payload.id);
+					break;
+			}
+		} else if (key === "clients") {
+			switch (payload.type) {
+				case "LIST_CLIENTS":
+					await mutators.setClients(tx, key, payload.value);
+					break;
+
+				case "SET_CLIENTS":
+					await mutators.setClients(tx, key, payload.value);
+					break;
+
+				case "UPDATE_CLIENT":
+					await mutators.updateClient(tx, key, payload.value);
+					break;
+
+				case "SET_CLIENT":
+					await mutators.setClient(tx, key, payload.value);
+					break;
+
+				case "DELETE_CLIENT":
+					await mutators.deleteClient(tx, key, payload.id);
+					break;
+			}
+		} else if (key === "theme") {
+			switch (payload.type) {
+				case "GET_THEME":
+					await mutators.getTheme(tx, key);
+					break;
+
+				case "INIT_THEME":
+					await mutators.initTheme(tx, key);
+					break;
+
+				case "UPDATE_THEME":
+					await mutators.updateTheme(tx, key, payload.value);
+					break;
+			}
+		} else if (key === "page") {
+			switch (payload.type) {
+				case "GET_PAGE":
+					await mutators.getPage(tx, key);
+					break;
+
+				case "INIT_PAGE":
+					await mutators.initPage(tx, key);
+					break;
+
+				case "UPDATE_PAGE":
+					await mutators.updatePage(tx, key, payload.value);
 					break;
 			}
 		}

@@ -14,4 +14,8 @@ export class CloudflareStorage implements Storage {
 	async set<T>(key: string, value: T): Promise<void> {
 		await this.ctx.storage.put(key, value)
 	}
+
+	async has<T>(key: string): Promise<boolean> {
+		return !!this.ctx.storage.get<T>(key)
+	}
 }

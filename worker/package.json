@@ -6,7 +6,6 @@
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"test": "vitest",
 		"lint": "concurrently \"npm run fix:formatting\" \"npm run fix:linting\"  \"npm run check:types\"",
 		"check:formatting": "prettier --check . --ignore-path .checkignore",
 		"check:linting": "eslint . --ignore-path .checkignore",
@@ -16,13 +15,11 @@
 		"fix:linting": "eslint . --fix --ignore-path .checkignore"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.1.0",
 		"@cloudflare/workers-types": "^4.20240405.0",
 		"@types/lodash": "^4.17.0",
 		"@types/uuid": "^9.0.8",
-		"typescript": "^5.0.4",
-		"vitest": "1.3.0",
-		"wrangler": "^3.0.0"
+		"typescript": "^5.4.5",
+		"wrangler": "^3.50.0"
 	},
 	"dependencies": {
 		"lodash": "^4.17.21",

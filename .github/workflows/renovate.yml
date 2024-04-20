@@ -2,7 +2,7 @@ name: Renovate
 
 on:
   schedule:
-    - cron: '0 14 * * 5' # e.g: Every friday afternoon
+    - cron: "0 14 * * 5" # e.g: Every friday afternoon
 
 jobs:
   renovate:
@@ -11,6 +11,6 @@ jobs:
       - name: Renovate Automatic Branch
         uses: bodinsamuel/renovate-automatic-branch@v1
         with:
-          github-token: YOUR_GITHUB_TOKEN
-          repo-owner: YOUR_ORG
-          repo-name: YOUR_REPO
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-owner: ${{ github.repository_owner }}
+          repo-name: ${{ github.event.repository.name }}
